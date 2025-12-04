@@ -1,14 +1,20 @@
 import { useState } from 'react'
 import { ConnectButton } from '@rainbow-me/rainbowkit'
 import { books, Book } from './data/books'
+import { useBookOwnership } from './hooks/useBookOwnership'
+import { TOKEN_IDS } from './config/wagmi'
 
 function App() {
   const [selectedBook, setSelectedBook] = useState<Book | null>(null)
 
+  // TODO: Uncomment when contract is deployed and LITERARY_NFT_ADDRESS is set
+  // const prologuesOwnership = useBookOwnership(TOKEN_IDS.THE_PROLOGUES)
+  // Then use prologuesOwnership.ownsBook to determine if book is accessible
+
   const handleBookClick = (book: Book) => {
+    // TODO: After contract deployment, check NFT ownership instead of book.status
+    // For now, using mock data from books.ts (book.status)
     if (book.status === 'locked') {
-      // For now, do nothing for locked books.
-      // Later, this is where a "purchase / unlock" flow can live.
       return
     }
     setSelectedBook(book)

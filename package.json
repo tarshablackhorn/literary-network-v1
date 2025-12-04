@@ -19,15 +19,19 @@
     "wagmi": "^2.12.17"
   },
   "devDependencies": {
+    "@nomicfoundation/hardhat-toolbox": "^6.1.0",
+    "@openzeppelin/contracts": "^5.4.0",
     "@types/react": "^18.3.12",
     "@types/react-dom": "^18.3.1",
     "@typescript-eslint/eslint-plugin": "^8.11.0",
     "@typescript-eslint/parser": "^8.11.0",
     "@vitejs/plugin-react": "^4.3.3",
+    "dotenv": "^17.2.3",
     "eslint": "^9.13.0",
     "eslint-plugin-react-hooks": "^5.0.0",
     "eslint-plugin-react-refresh": "^0.4.13",
     "globals": "^16.5.0",
+    "hardhat": "^3.0.17",
     "prettier": "^3.3.3",
     "typescript": "^5.6.3",
     "vite": "^5.4.10"
