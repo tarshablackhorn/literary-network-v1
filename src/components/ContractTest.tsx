@@ -36,13 +36,14 @@ export function ContractTest() {
     LITERARY_NFT_ADDRESS === '0x0000000000000000000000000000000000000000'
 
   // Test reading NFT balance
-  const { data: balance, isLoading: balanceLoading } = useReadContract({
+  const { data: balance, isLoading: balanceLoading, error: balanceError } = useReadContract({
     address: LITERARY_NFT_ADDRESS as `0x${string}`,
     abi: TEST_ABI,
     functionName: 'balanceOf',
-    args: address ? [address, BigInt(TOKEN_IDS.THE_PROLOGUES)] : undefined,
+    args: address && isConnected ? [address, BigInt(TOKEN_IDS.THE_PROLOGUES)] : undefined,
     query: {
-      enabled: !!address && !contractNotDeployed,
+      enabled: !!address && isConnected && !contractNotDeployed,
+      refetchInterval: 3000, // Refetch every 3 seconds
     },
   })
 
@@ -78,9 +79,27 @@ export function ContractTest() {
         background: 'rgba(92, 255, 177, 0.05)',
       }}
     >
-      <h3 style={{ marginBottom: '1rem', color: '#5cffb1' }}>
-        🧪 Contract Integration Test
-      </h3>
+      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1rem' }}>
+        <h3 style={{ margin: 0, color: '#5cffb1' }}>
+          🧪 Contract Integration Test
+        </h3>
+        {!contractNotDeployed && (
+          <button
+            onClick={handleRefresh}
+            style={{
+              padding: '0.5rem 1rem',
+              borderRadius: '0.25rem',
+              border: '1px solid #5cffb1',
+              background: 'transparent',
+              color: '#5cffb1',
+              cursor: 'pointer',
+              fontSize: '0.85rem',
+            }}
+          >
+            🔄 Refresh Data
+          </button>
+        )}
+      </div>
 
       <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
         {/* Wallet Connection Status */}
@@ -147,12 +166,16 @@ export function ContractTest() {
               <strong>Your Balance (The Prologues):</strong>{' '}
               {balanceLoading ? (
                 'Loading...'
+              ) : balanceError ? (
+                <span style={{ color: '#ff5c5c' }}>
+                  Error: {balanceError.message?.slice(0, 100)}
+                </span>
               ) : balance !== undefined ? (
                 <span style={{ color: balance > 0 ? '#5cffb1' : '#fff' }}>
-                  {balance.toString()} {balance > 0 ? '✓' : '(not owned)'}
+                  {balance.toString()} {balance > 0 ? '✓ Owned!' : '(not owned yet)'}
                 </span>
               ) : (
-                'Error reading'
+                'Waiting...'
               )}
             </div>
 
