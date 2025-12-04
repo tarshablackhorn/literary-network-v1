@@ -1,34 +1,178 @@
-import { useAccount, useConnect, useDisconnect } from 'wagmi'
+import { useState } from 'react'
+import { ConnectButton } from '@rainbow-me/rainbowkit'
+import { books, Book } from './data/books'
 
 function App() {
-  const { address, isConnected } = useAccount()
-  const { connect, connectors } = useConnect()
-  const { disconnect } = useDisconnect()
+  const [selectedBook, setSelectedBook] = useState<Book | null>(null)
 
+  const handleBookClick = (book: Book) => {
+    if (book.status === 'locked') {
+      // For now, do nothing for locked books.
+      // Later, this is where a "purchase / unlock" flow can live.
+      return
+    }
+    setSelectedBook(book)
+  }
   return (
-    <div style={{ padding: '2rem', fontFamily: 'system-ui, sans-serif' }}>
-      <h1>Base Mini App</h1>
-      
-      {isConnected ? (
+    <main
+      style={{
+        minHeight: '100vh',
+        padding: '2rem',
+        background: '#05060b',
+        color: '#f5f5f5',
+        fontFamily: 'system-ui, -apple-system, BlinkMacSystemFont, sans-serif',
+      }}
+    >
+      {/* Header */}
+      <header
+        style={{
+          display: 'flex',
+          justifyContent: 'space-between',
+          alignItems: 'center',
+          marginBottom: '2rem',
+        }}
+      >
         <div>
-          <p>Connected: {address}</p>
-          <button onClick={() => disconnect()}>Disconnect</button>
+          <h1 style={{ fontSize: '2rem', marginBottom: '0.25rem' }}>
+            Literary Network
+          </h1>
+          <p style={{ opacity: 0.7 }}>
+            Connect your wallet to view and unlock your books.
+          </p>
         </div>
-      ) : (
-        <div>
-          <p>Connect your wallet to get started</p>
-          {connectors.map((connector) => (
-            <button
-              key={connector.id}
-              onClick={() => connect({ connector })}
-              style={{ marginRight: '0.5rem' }}
+        <ConnectButton />
+      </header>
+
+      {/* Library section */}
+      <section style={{ marginBottom: '2rem' }}>
+        <h2 style={{ fontSize: '1.25rem', marginBottom: '1rem' }}>
+          Your Library
+        </h2>
+
+        <div
+          style={{
+            display: 'grid',
+            gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))',
+            gap: '1rem',
+          }}
+        >
+          {books.map((book) => {
+            const isOwned = book.status === 'owned'
+
+            return (
+              <article
+                key={book.id}
+                onClick={() => handleBookClick(book)}
+                style={{
+                  borderRadius: '0.75rem',
+                  padding: '1rem',
+                  border: '1px solid rgba(255,255,255,0.08)',
+                  background: isOwned
+                    ? 'linear-gradient(135deg, #12131a, #181f36)'
+                    : 'linear-gradient(135deg, #0b0c11, #111320)',
+                  opacity: isOwned ? 1 : 0.85,
+                  display: 'flex',
+                  flexDirection: 'column',
+                  justifyContent: 'space-between',
+                  minHeight: '170px',
+                  cursor: isOwned ? 'pointer' : 'not-allowed',
+                }}
+              >
+                <div>
+                  <h3 style={{ marginBottom: '0.25rem' }}>{book.title}</h3>
+                  <p style={{ fontSize: '0.9rem', opacity: 0.8 }}>
+                    by {book.author}
+                  </p>
+                  <p
+                    style={{
+                      fontSize: '0.85rem',
+                      opacity: 0.75,
+                      marginTop: '0.5rem',
+                    }}
+                  >
+                    {book.preview}
+                  </p>
+                </div>
+
+                <p
+                  style={{
+                    marginTop: '0.75rem',
+                    fontSize: '0.85rem',
+                    fontWeight: 500,
+                    color: isOwned ? '#5cffb1' : '#ffb35c',
+                  }}
+                >
+                  {isOwned ? 'Owned · Tap to read' : 'Locked · Not purchased'}
+                </p>
+              </article>
+            )
+          })}
+        </div>
+      </section>
+
+      {/* Reader section */}
+      <section
+        style={{
+          borderRadius: '0.75rem',
+          border: '1px solid rgba(255,255,255,0.08)',
+          padding: '1.5rem',
+          background: 'linear-gradient(135deg, #090a10, #111525)',
+          minHeight: '180px',
+        }}
+      >
+        {selectedBook ? (
+          <>
+            <div
+              style={{
+                display: 'flex',
+                justifyContent: 'space-between',
+                alignItems: 'baseline',
+                marginBottom: '0.75rem',
+              }}
             >
-              Connect with {connector.name}
-            </button>
-          ))}
-        </div>
-      )}
-    </div>
+              <div>
+                <h2 style={{ fontSize: '1.25rem', marginBottom: '0.25rem' }}>
+                  {selectedBook.title}
+                </h2>
+                <p style={{ fontSize: '0.9rem', opacity: 0.8 }}>
+                  by {selectedBook.author}
+                </p>
+              </div>
+              <button
+                onClick={() => setSelectedBook(null)}
+                style={{
+                  borderRadius: '999px',
+                  border: '1px solid rgba(255,255,255,0.2)',
+                  background: 'transparent',
+                  color: '#f5f5f5',
+                  padding: '0.3rem 0.9rem',
+                  fontSize: '0.8rem',
+                  cursor: 'pointer',
+                }}
+              >
+                Close
+              </button>
+            </div>
+
+            <p
+              style={{
+                fontSize: '0.95rem',
+                lineHeight: 1.6,
+                opacity: 0.9,
+                whiteSpace: 'pre-wrap',
+              }}
+            >
+              {selectedBook.fullText}
+            </p>
+          </>
+        ) : (
+          <p style={{ opacity: 0.8, fontSize: '0.95rem' }}>
+            Select an owned book from your library to start reading. Locked
+            titles will unlock later when you own them onchain.
+          </p>
+        )}
+      </section>
+    </main>
   )
 }
 
