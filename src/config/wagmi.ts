@@ -9,7 +9,7 @@ export const config = getDefaultConfig({
 })
 
 // Contract addresses - update after deployment
-export const LITERARY_NFT_ADDRESS = '0x0000000000000000000000000000000000000000' // Replace with deployed address
+export const LITERARY_NFT_ADDRESS = '0x8eC1e7B020f799E1064c838e1C86488E8Fa793a1' // Deployed on Base Sepolia
 
 // Token IDs for each book
 export const TOKEN_IDS = {

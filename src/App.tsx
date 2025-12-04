@@ -3,6 +3,7 @@ import { ConnectButton } from '@rainbow-me/rainbowkit'
 import { books, Book } from './data/books'
 import { useBookOwnership } from './hooks/useBookOwnership'
 import { TOKEN_IDS } from './config/wagmi'
+import { ContractTest } from './components/ContractTest'
 
 function App() {
   const [selectedBook, setSelectedBook] = useState<Book | null>(null)
@@ -115,6 +116,9 @@ function App() {
           })}
         </div>
       </section>
+
+      {/* Contract Integration Test */}
+      <ContractTest />
 
       {/* Reader */}
       <section
