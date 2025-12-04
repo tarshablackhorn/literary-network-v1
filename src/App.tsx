@@ -110,14 +110,16 @@ function App() {
         </div>
       </section>
 
-      {/* Reader section */}
+      {/* Reader */}
       <section
         style={{
           borderRadius: '0.75rem',
           border: '1px solid rgba(255,255,255,0.08)',
-          padding: '1.5rem',
+          padding: '2rem',
           background: 'linear-gradient(135deg, #090a10, #111525)',
           minHeight: '180px',
+          maxHeight: '70vh',
+          overflowY: 'auto',
         }}
       >
         {selectedBook ? (
@@ -154,16 +156,19 @@ function App() {
               </button>
             </div>
 
-            <p
+            <div
               style={{
-                fontSize: '0.95rem',
-                lineHeight: 1.6,
-                opacity: 0.9,
+                fontSize: '1rem',
+                lineHeight: 1.8,
+                opacity: 0.92,
                 whiteSpace: 'pre-wrap',
+                fontFamily: 'Georgia, Garamond, serif',
+                maxWidth: '65ch',
+                margin: '0 auto',
               }}
             >
               {selectedBook.fullText}
-            </p>
+            </div>
           </>
         ) : (
           <p style={{ opacity: 0.8, fontSize: '0.95rem' }}>

@@ -11,22 +11,22 @@ export type Book = {
   fullText: string
 }
 
-// Import the real sample text from file
-import prologueSample from '../content/prologue-sample.txt?raw'
+// Import the complete book text with all chapters
+import prologuesComplete from '../content/the-prologues-complete.txt?raw'
 
 export const books: Book[] = [
   {
     id: 1,
     title: 'The Prologue Archive',
-    author: 'Tarsha Blackhorn',
+    author: 'La\'Tarsha Blackhorn',
     status: 'owned',
     preview: 'A quiet ledger of stories that refuse to stay buried...',
-    fullText: prologueSample,
+    fullText: prologuesComplete,
   },
   {
     id: 2,
     title: 'Ash & Static',
-    author: 'Tarsha Blackhorn',
+    author: 'La\'Tarsha Blackhorn',
     status: 'locked',
     preview: 'Signals in the dark, waiting for someone brave enough to listen.',
     fullText:
@@ -35,7 +35,7 @@ export const books: Book[] = [
   {
     id: 3,
     title: 'Midnight Ledger',
-    author: 'Tarsha Blackhorn',
+    author: 'La\'Tarsha Blackhorn',
     status: 'locked',
     preview: 'A record of every promise that was never meant to be kept.',
     fullText:

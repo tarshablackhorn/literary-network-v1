@@ -1,17 +1,9 @@
-import { http, createConfig } from 'wagmi'
+import { getDefaultConfig } from '@rainbow-me/rainbowkit'
 import { base, baseSepolia } from 'wagmi/chains'
-import { injected, walletConnect } from 'wagmi/connectors'
 
-const projectId = '1e29c199baacc42bf14c8cab95de404b'
-
-export const config = createConfig({
+export const config = getDefaultConfig({
+  appName: 'Literary Network',
+  projectId: '1e29c199baacc42bf14c8cab95de404b',
   chains: [base, baseSepolia],
-  connectors: [
-    injected(),
-    walletConnect({ projectId }),
-  ],
-  transports: {
-    [base.id]: http(),
-    [baseSepolia.id]: http(),
-  },
+  ssr: false,
 })
