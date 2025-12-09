@@ -1,13 +1,16 @@
-# Base Mini App
+# Literary Network (Base Mainnet)
 
-A minimal Web3 application built for Base blockchain with wallet connection capabilities.
+A minimal Web3 literary dApp for selling and unlocking books on **Base Mainnet**.
 
 ## Features
 
 - ⚡️ Vite + React + TypeScript
 - 🔗 Wagmi for Web3 integration
-- 🌐 Base and Base Sepolia network support
-- 👛 WalletConnect integration
+- 🌐 Base Mainnet (production)
+- 👛 RainbowKit wallet connection
+- 📚 NFT-gated book access (ERC-1155)
+- 🔄 Network switching with one-click
+- ⚠️ Error handling and loading states
 - 🎨 Clean, modern UI
 
 ## Getting Started
@@ -30,7 +33,7 @@ Start the development server:
 npm run dev
 ```
 
-The app will open at `http://localhost:3000`
+The app will open at `http://localhost:5173` (Vite default)
 
 ### Build
 
@@ -60,7 +63,18 @@ npm run preview
 - **Build Tool**: Vite
 - **Language**: TypeScript
 - **Web3**: Wagmi, Viem
-- **Chains**: Base, Base Sepolia
+- **Chains**: Base Mainnet
+
+## Environment Variables
+
+Create a `.env.local` with:
+
+```
+VITE_BASE_MAINNET_RPC=https://mainnet.base.org
+VITE_LITERARY_NFT_ADDRESS=0xcB8B11587625EA052D309e86fA0F2d525A4f94e4
+```
+
+Use Alchemy/QuickNode for better RPC performance.
 
 ## Project Structure
 
@@ -75,6 +89,19 @@ src/
 ├── main.tsx       # Application entry point
 └── index.css      # Global styles
 ```
+
+## Smart Contract
+
+- **Contract**: `0xcB8B11587625EA052D309e86fA0F2d525A4f94e4` (Base Mainnet)
+- **Type**: ERC-1155 (LiteraryNFT)
+- **Price**: 0.001 ETH per book
+- **BaseScan**: https://basescan.org/address/0xcB8B11587625EA052D309e86fA0F2d525A4f94e4
+
+## Documentation
+
+- [Base Mainnet Deployment Guide](./docs/BASE_MAINNET_DEPLOYMENT.md)
+- [Contract Verification Guide](./docs/CONTRACT_VERIFICATION.md)
+- [Migration Completion Summary](./BASE_MIGRATION_COMPLETE.md)
 
 ## License
 

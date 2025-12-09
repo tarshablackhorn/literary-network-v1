@@ -1,5 +1,6 @@
 import { useAccount, useReadContract } from 'wagmi'
 import { LITERARY_NFT_ADDRESS, TOKEN_IDS } from '../config/wagmi'
+import { base } from 'wagmi/chains'
 
 // Minimal ABI for testing - just the functions we need
 const TEST_ABI = [
@@ -79,27 +80,9 @@ export function ContractTest() {
         background: 'rgba(92, 255, 177, 0.05)',
       }}
     >
-      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1rem' }}>
-        <h3 style={{ margin: 0, color: '#5cffb1' }}>
-          🧪 Contract Integration Test
-        </h3>
-        {!contractNotDeployed && (
-          <button
-            onClick={handleRefresh}
-            style={{
-              padding: '0.5rem 1rem',
-              borderRadius: '0.25rem',
-              border: '1px solid #5cffb1',
-              background: 'transparent',
-              color: '#5cffb1',
-              cursor: 'pointer',
-              fontSize: '0.85rem',
-            }}
-          >
-            🔄 Refresh Data
-          </button>
-        )}
-      </div>
+      <h3 style={{ margin: 0, marginBottom: '1rem', color: '#5cffb1' }}>
+        🧪 Contract Integration Test
+      </h3>
 
       <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
         {/* Wallet Connection Status */}
@@ -123,11 +106,11 @@ export function ContractTest() {
 
             <div>
               <strong>Network:</strong> {chain?.name || 'Unknown'}{' '}
-              {chain?.id === 84532 ? (
-                <span style={{ color: '#5cffb1' }}>✓ Base Sepolia</span>
+              {chain?.id === base.id ? (
+                <span style={{ color: '#5cffb1' }}>✓ Base Mainnet</span>
               ) : (
                 <span style={{ color: '#ffb35c' }}>
-                  ⚠ Switch to Base Sepolia
+                  ⚠ Wrong Network (Switch to Base)
                 </span>
               )}
             </div>
@@ -205,10 +188,10 @@ export function ContractTest() {
           >
             <strong>Next Steps:</strong>
             <ol style={{ margin: '0.5rem 0 0 1.25rem', paddingLeft: 0 }}>
-              <li>Get Base Sepolia testnet ETH</li>
-              <li>Deploy contract: <code>npx hardhat run scripts/deploy.ts --network baseSepolia</code></li>
-              <li>Update LITERARY_NFT_ADDRESS in src/config/wagmi.ts</li>
-              <li>Refresh this page to see contract data!</li>
+              <li>Set VITE_LITERARY_NFT_ADDRESS in .env.local</li>
+              <li>Deploy contract to Base Mainnet</li>
+              <li>Update the environment variable with deployed address</li>
+              <li>Restart dev server to see contract data!</li>
             </ol>
           </div>
         )}

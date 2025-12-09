@@ -3,19 +3,18 @@ import { ConnectButton } from '@rainbow-me/rainbowkit'
 import { books, Book } from './data/books'
 import { useBookOwnership } from './hooks/useBookOwnership'
 import { TOKEN_IDS } from './config/wagmi'
-import { ContractTest } from './components/ContractTest'
+import { PurchaseButton } from './components/PurchaseButton'
+import { NetworkGuard } from './components/NetworkGuard'
 
 function App() {
   const [selectedBook, setSelectedBook] = useState<Book | null>(null)
 
-  // TODO: Uncomment when contract is deployed and LITERARY_NFT_ADDRESS is set
-  // const prologuesOwnership = useBookOwnership(TOKEN_IDS.THE_PROLOGUES)
-  // Then use prologuesOwnership.ownsBook to determine if book is accessible
+  // Check NFT ownership for The Prologues
+  const prologuesOwnership = useBookOwnership(TOKEN_IDS.THE_PROLOGUES)
 
   const handleBookClick = (book: Book) => {
-    // TODO: After contract deployment, check NFT ownership instead of book.status
-    // For now, using mock data from books.ts (book.status)
-    if (book.status === 'locked') {
+    // Only open book if user owns it
+    if (!prologuesOwnership.ownsBook) {
       return
     }
     setSelectedBook(book)
@@ -50,6 +49,9 @@ function App() {
         <ConnectButton />
       </header>
 
+      {/* Network mismatch warning */}
+      <NetworkGuard />
+
       {/* Library section */}
       <section style={{ marginBottom: '2rem' }}>
         <h2 style={{ fontSize: '1.25rem', marginBottom: '1rem' }}>
@@ -64,7 +66,7 @@ function App() {
           }}
         >
           {books.map((book) => {
-            const isOwned = book.status === 'owned'
+            const isOwned = prologuesOwnership.ownsBook
 
             return (
               <article
@@ -81,8 +83,8 @@ function App() {
                   display: 'flex',
                   flexDirection: 'column',
                   justifyContent: 'space-between',
-                  minHeight: '170px',
-                  cursor: isOwned ? 'pointer' : 'not-allowed',
+                  minHeight: '200px',
+                  cursor: isOwned ? 'pointer' : 'default',
                 }}
               >
                 <div>
@@ -101,24 +103,27 @@ function App() {
                   </p>
                 </div>
 
-                <p
-                  style={{
-                    marginTop: '0.75rem',
-                    fontSize: '0.85rem',
-                    fontWeight: 500,
-                    color: isOwned ? '#5cffb1' : '#ffb35c',
-                  }}
-                >
-                  {isOwned ? 'Owned · Tap to read' : 'Locked · Not purchased'}
-                </p>
+                {isOwned ? (
+                  <p
+                    style={{
+                      marginTop: '0.75rem',
+                      fontSize: '0.85rem',
+                      fontWeight: 500,
+                      color: '#5cffb1',
+                    }}
+                  >
+                    Owned · Tap to read
+                  </p>
+                ) : (
+                  <div style={{ marginTop: '0.75rem' }}>
+                    <PurchaseButton tokenId={book.id} price="0.001" />
+                  </div>
+                )}
               </article>
             )
           })}
         </div>
       </section>
-
-      {/* Contract Integration Test */}
-      <ContractTest />
 
       {/* Reader */}
       <section
