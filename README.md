@@ -1,17 +1,19 @@
-# Literary Network (Base Mainnet)
+# Literary Network
 
-A minimal Web3 literary dApp for selling and unlocking books on **Base Mainnet**.
+**[Live App on Base](https://literary-network-v1.vercel.app/)** | **[Base Mini App](https://base.org/apps)**
+
+A Web3 literary dApp for buying and reading books onchain. Own your books forever as NFTs on Base Mainnet.
 
 ## Features
 
-- ⚡️ Vite + React + TypeScript
-- 🔗 Wagmi for Web3 integration
-- 🌐 Base Mainnet (production)
-- 👛 RainbowKit wallet connection
-- 📚 NFT-gated book access (ERC-1155)
-- 🔄 Network switching with one-click
-- ⚠️ Error handling and loading states
-- 🎨 Clean, modern UI
+- 📚 **NFT-Gated Books** - Purchase books as ERC-1155 NFTs and unlock instant reading access
+- 🔗 **Base Native** - Built on Base for low fees and fast transactions
+- 👛 **Easy Wallet Connection** - RainbowKit integration with multiple wallet support
+- 📱 **Base Mini App** - Featured in the Base app ecosystem
+- ⚡️ **Modern Stack** - React + TypeScript + Vite + Wagmi v2
+- 🎨 **Clean UI** - Dark theme with smooth reading experience
+- 🔄 **Network Switching** - One-click Base network switching
+- ⚠️ **Error Handling** - Comprehensive error and loading states
 
 ## Getting Started
 
@@ -71,7 +73,7 @@ Create a `.env.local` with:
 
 ```
 VITE_BASE_MAINNET_RPC=https://mainnet.base.org
-VITE_LITERARY_NFT_ADDRESS=0xcB8B11587625EA052D309e86fA0F2d525A4f94e4
+VITE_LITERARY_NFT_ADDRESS=0xB2Cf4587E8CD20A54b08400D805b74727C5D488B
 ```
 
 Use Alchemy/QuickNode for better RPC performance.
@@ -92,10 +94,16 @@ src/
 
 ## Smart Contract
 
-- **Contract**: `0xcB8B11587625EA052D309e86fA0F2d525A4f94e4` (Base Mainnet)
+- **Contract**: `0xB2Cf4587E8CD20A54b08400D805b74727C5D488B` (Base Mainnet)
 - **Type**: ERC-1155 (LiteraryNFT)
 - **Price**: 0.001 ETH per book
-- **BaseScan**: https://basescan.org/address/0xcB8B11587625EA052D309e86fA0F2d525A4f94e4
+- **BaseScan**: https://basescan.org/address/0xB2Cf4587E8CD20A54b08400D805b74727C5D488B#code
+
+## Live App
+
+- **Production URL**: https://literary-network-v1.vercel.app/
+- **Base Mini App**: Listed in Base app ecosystem
+- **Status**: ✅ Live on Base Mainnet
 
 ## Documentation
 
